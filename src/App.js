@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Form from "./Components/Form/Form";
+import ContactsListItem from "./Components/ContactsListItem/ContactsListItem";
+import FilterItems from "./Components/FilterItems/FilterItems";
+import {getContacts} from './redux/contacts/contactsOperations';
+import {connect, useDispatch} from 'react-redux';
+import { useEffect } from "react";
 
-function App() {
+const App = ({contacts,filter}) => {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(getContacts())
+  },[])  
+const filterItems = (query) => {
+    return contacts.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()) && item);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>PhoneBook</h1>
+      <Form />
+      <h2>Contacts</h2>
+      <FilterItems/>
+      <ul>
+        <ContactsListItem filter={filterItems(filter)}/>
+      </ul>
+    </>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state)=>{
+  return {
+    contacts: state.contacts.items,
+    filter: state.contacts.filter
+  }
+}
+export default connect(mapStateToProps)(App);
