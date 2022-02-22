@@ -8,3 +8,7 @@ export const getContactsFromServer = ()=>{
 export const postContactToServer = (contact)=>{
 return axios.post('/contacts',contact)
 }
+
+export const deleteContactFromServer = (id)=>{
+    return axios.delete(`/contacts/${id}`)
+}

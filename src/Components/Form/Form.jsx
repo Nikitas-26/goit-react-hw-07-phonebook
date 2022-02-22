@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import {addContact} from '../../redux/contacts/contactsOperations';
 
 const Form = ({contacts,addContactProp}) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-
+  const loader = useSelector(state => state.contacts.loader)
   const onInputValue = (e) => {
     const { name, value } = e.target;
     switch (name) {
@@ -55,6 +56,7 @@ const Form = ({contacts,addContactProp}) => {
   required
 />
       <button type="submit" >Add Contact</button>
+      {loader && <h2>Loading...</h2>}
        </form>
       
        </>

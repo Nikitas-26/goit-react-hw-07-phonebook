@@ -10,7 +10,7 @@ const App = ({contacts,filter}) => {
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(getContacts())
-  },[])  
+  },[dispatch])  
 const filterItems = (query) => {
     return contacts.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()) && item);
   };
